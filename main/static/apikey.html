@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,italic,600,600italic,700,700italic,800,800italic,400|Roboto+Condensed:300,300italic,italic,700,700italic,400|Open+Sans+Condensed:300,300italic,700,400|PT+Sans+Narrow:700,400" rel="stylesheet" type="text/css">
+
+  <script src="lib/jquery-3.3.1.min.js"></script>
+
+  <script src="lib/underscore-min.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="lib/semantic/container.min.css">
+  <link rel="stylesheet" type="text/css" href="lib/semantic/grid.min.css">
+  <link rel="stylesheet" type="text/css" href="lib/semantic/icon.min.css">
+  <link rel="stylesheet" type="text/css" href="lib/semantic/message.min.css">
+  <link rel="stylesheet" type="text/css" href="lib/semantic/reset.min.css">
+  <link rel="stylesheet" type="text/css" href="lib/semantic/segment.min.css">
+  <link rel="stylesheet" type="text/css" href="lib/semantic/site.min.css">
+
+  <link rel="stylesheet" type="text/css" href="lib/webpage.css">
+  <link rel="stylesheet" type="text/css" href="lib/webpage-anim.css">
+
+  <style>
+    html,body {
+      font-family: Lato;
+      font-variant: small-caps;
+      font-size: 2vmin !important;
+      min-width: 200px !important;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div class="branding">
+    <img class="logo appear-delayed" src="lib/logo.png" />
+  </div>
+  <div class="hero">
+    <div class="main-hero in-left">
+      API key registration
+    </div>
+  </div>
+
+  <div class="ui vertical stripe segment appear-delayed">
+    <div class="ui vertical section center aligned stackable grid container">
+      <div class="row centered">
+        <h3>Your <em id="is-test-only">test only</em> API key:</h3>
+        <h3><%-apikey%></h3>
+        <a href="swagger.html" target="_blank"><h3>Use it to get tokens with the API.</h3></a>
+    </div>
+  </div>
+
+  <div class="ui vertical footer segment">
+    <div class="ui container">
+      <div class="ui stackable equal height stackable grid">
+        <div class="two wide column"></div>
+        <div class="four wide column">
+          <h4 class="ui header">overhide.io FOSS</h4>
+          <div class="ui link list">
+            <div class="item">Reddit: <a href="https://www.reddit.com/r/overhide/" target="_blank">r/overhide</a></div>
+          </div>
+        </div>
+        <div class="four wide column">
+          <h4 class="ui header">Legal</h4>
+          <div class="ui link list">
+            <a href="lib/tos.html" target="_blank" class="item">Terms of Service</a>
+          </div>
+        </div>
+        <div class="four wide column">
+          <h4 class="ui header">
+            <a href="https://twitter.com/overhideio" target="_blank"><i class="twitter icon large"></i></a>
+            <a href="https://www.linkedin.com/company/overhide-inc" target="_blank"><i class="linkedin icon large"></i></a>
+            <a href="https://www.reddit.com/r/overhide/" target="_blank"><i class="reddit icon large"></i></a>
+          </h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+<script>
+  $(document).ready(function() {
+    if ('<%-isTestOnly%>' === 'true') {
+      $('#is-test-only').show();
+    } else {
+      $('#is-test-only').hide();
+    }
+  });
+
+</script>
+
+</html>

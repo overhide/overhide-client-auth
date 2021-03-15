@@ -1,0 +1,73 @@
+{
+  "name": "overhide-client-auth",
+  "version": "1.0.0",
+  "description": "Generate client API keys for retrieval of tokens to use overhide services.",
+  "main": "main/js/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JakubNer/overhide-client-auth.git"
+  },
+  "keywords": [
+    "overhide",
+    "authorization",
+    "token"
+  ],
+  "author": "Jakub Ner",
+  "license": "MIT",
+  "homepage": "https://github.com/JakubNer/overhide-client-auth.git",
+  "dependencies": {
+    "@godaddy/terminus": "4.1.0",
+    "cors": "2.8.5",
+    "debug": "4.1.0",
+    "ejs": "2.6.1",
+    "express": "4.16.4",
+    "express-rate-limit": "3.3.2",
+    "js-yaml": "3.13.1",
+    "license-compatibility-checker": "0.3.3",
+    "node-fetch": "2.3.0",
+    "pg": "7.7.1",
+    "qs": "6.6.0",
+    "swagger-jsdoc": "^3.2.9",
+    "uuid": "3.3.2",
+    "web3": "^1.0.0-beta.55"
+  },
+  "config": {
+    "PROTOCOL": "http",
+    "BASE_URL": "localhost:8100",
+    "PORT": 8100,
+    "DEBUG": "",
+    "RATE_LIMIT_WINDOW_MS": 1000,
+    "RATE_LIMIT_MAX_REQUESTS_PER_WINDOW": 100,
+    "POSTGRES_HOST": "localhost",
+    "POSTGRES_PORT": 5432,
+    "POSTGRES_DATABASE": "",
+    "POSTGRES_USER": "",
+    "POSTGRES_PASSWORD": "",
+    "POSTGRES_SSL": "",
+    "SELECT_MAX_ROWS": 30,
+    "SALT": "",
+    "RECAPTCHA_URI": "https://www.google.com/recaptcha/api/siteverify",
+    "RECAPTCHA_SITE_KEY": "",
+    "RECAPTCHA_SECRET_KEY": ""
+  },
+  "devDependencies": {
+    "chai": "4.2.0",
+    "chai-http": "4.2.0",
+    "copyfiles": "2.1.0",
+    "mocha": "5.2.0",
+    "nodemon": "1.18.10",
+    "puppeteer": "^1.15.0"
+  },
+  "scripts": {
+    "lic-check": "license-compatibility-checker",
+    "start": "node main/js/index.js",
+    "test": "mocha test/js",
+    "load": "node test/load/load.js",
+    "dev": "nodemon --inspect main/js/index.js",
+    "cp": "copyfiles --help",
+    "build": "docker build -t oh-client-auth -f main/docker/Dockerfile .",
+    "compose-dev": "docker-compose -f main/docker/docker-compose.yml -f main/docker/docker-compose.dev.yml --project-directory . --project-name oh up -d",
+    "psql-dev": "docker run -it --rm --link postgres:postgres --network oh_default postgres psql -h postgres -U adam -d oh-client-auth",
+    "db-evolve": "node tools/db-evolve/db-evolve.js"
+  }
+}

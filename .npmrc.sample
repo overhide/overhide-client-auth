@@ -1,0 +1,17 @@
+PROTOCOL=http
+BASE_URL=localhost:8100
+PORT=8100
+DEBUG=overhide-client-auth*
+RATE_LIMIT_WINDOW_MS=1000
+RATE_LIMIT_MAX_REQUESTS_PER_WINDOW=100
+POSTGRES_HOST=postgres
+POSTGRES_PORT=5432
+POSTGRES_DB=oh-client-auth
+POSTGRES_USER=adam
+POSTGRES_PASSWORD=c0c0nut
+POSTGRES_SSL=
+SELECT_MAX_ROWS=30
+SALT=c0c0nut
+RECAPTCHA_URI=https://www.google.com/recaptcha/api/siteverify
+RECAPTCHA_SITE_KEY=<get this from google>
+RECAPTCHA_SECRET_KEY=<get this from google>

@@ -1,0 +1,10 @@
+version: '3.2'
+services:
+  oh-ledger:
+    build: 
+      context: .
+      dockerfile: ./main/docker/Dockerfile
+    image: oh-client-auth
+    container_name: oh-client-auth
+    ports:
+    - "8100:8100"
