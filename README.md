@@ -1,3 +1,5 @@
+<p align="center"><a href="https://github.com/overhide"><img src="./main/static/lib/logo.png" width="200px"/></a></p>
+
 # overhide-client-auth
 
 Client API key registration, token retrieval, and validation.
