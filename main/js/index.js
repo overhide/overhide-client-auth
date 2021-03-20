@@ -140,7 +140,10 @@ app.get('/token', throttle, async (req, res, next) => {
         var result = await database.getClient(apikey);  
       }    
       if (result) {
-        var token = crypto.symmetricEncrypt(JSON.stringify({...result, created: (new Date()).toISOString()}), SALT).toString('base64');;
+        var token = crypto.symmetricEncrypt(JSON.stringify({
+          ...result, 
+          token_validity_seconds: TOKEN_VALIDITY_SECONDS, 
+          created: (new Date()).toISOString()}), SALT).toString('base64');;
         res.status(200).send(token);          
       } else {
         debug('GET /token <= %o ERROR :: not found', query);

@@ -36,16 +36,22 @@ All the DB connectivity configuration points assume that the DB and DB user are 
 
 For localhost Docker, `psql` into the container:
 
-`npm run psql-dev`
+```
+npm run psql-dev
+\c "oh-client-auth"
+\dt
+```
+
+
 
 The 'adam' role and 'ohledger' DB should already be created and connected to with the above command (as per `.npmrc.dev` environment passed into docker-compose).
 
 If not, to manually create:
 
 ```
-postgres=# create database oh-client-auth;
+postgres=# create database "oh-client-auth";
 postgres=# create user adam with encrypted password 'c0c0nut';
-postgres=# grant all privileges on database ohledger to adam;
+postgres=# grant all privileges on database "oh-client-auth" to adam;
 ```
 
 Make sure to set the configuration points in your *.npmrc* appropriately.

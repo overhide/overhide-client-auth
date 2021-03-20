@@ -67,7 +67,7 @@
     "cp": "copyfiles --help",
     "build": "docker build -t oh-client-auth -f main/docker/Dockerfile .",
     "compose-dev": "docker-compose -f main/docker/docker-compose.yml -f main/docker/docker-compose.dev.yml --project-directory . --project-name oh up -d",
-    "psql-dev": "docker run -it --rm --link postgres:postgres --network oh_default postgres psql -h postgres -U adam -d oh-client-auth",
+    "psql-dev": "docker run -it --rm --link postgres:postgres --network oh_default postgres psql -h postgres -U adam -d postgres",
     "db-evolve": "node tools/db-evolve/db-evolve.js"
   }
 }
