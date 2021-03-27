@@ -143,7 +143,8 @@ app.get('/token', throttle, async (req, res, next) => {
         var token = crypto.symmetricEncrypt(JSON.stringify({
           ...result, 
           token_validity_seconds: TOKEN_VALIDITY_SECONDS, 
-          created: (new Date()).toISOString()}), SALT).toString('base64');;
+          created: (new Date()).toISOString()}), SALT).toString('base64');
+        token = encodeURIComponent(token);
         res.status(200).send(token);          
       } else {
         debug('GET /token <= %o ERROR :: not found', query);
@@ -194,6 +195,7 @@ app.get('/validate', throttle, (req, res, next) => {
       let token = query['token'];
       let istest = 'istest' in query && query['istest'] && query['istest'].toLowerCase() == 'true';
       if (!token || typeof token !== 'string') throw `invalid token, please register for an API key at https://token.overhide.io/register and use GET /token on it.`;
+      token = decodeURIComponent(token);
       try {
         token = new Buffer(token, 'base64');  
         token = crypto.symmetricDecrypt(token, SALT);
