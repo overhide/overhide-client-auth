@@ -63,8 +63,12 @@ class Swagger {
         host: ${this[ctx].base_url}
         basePath: /
         info:
-          description: |          
-            API to retrieve a token for use with other *overhide* services.
+          description: |    
+            <hr/>         
+            <a href="https://overhide.io" target="_blank">overhide.io</a> is a free and open-sourced (mostly) ecosystem of widgets, a front-end library, and back-end services &mdash; to make addition of "logins" and "in-app-purchases" (IAP) to your app as banal as possible.
+            <hr/><br/>          
+          
+            This  is an API to retrieve a token for use with other *overhide* services.
 
             Use of the token with other *overhide* services is usually abstracted on the front-end by providing it to [our widgets](https://github.com/overhide/overhide-widgets) which provide them to the [ledgers.js](https://github.com/overhide/ledgers.js) library.  The [ledgers.js](https://github.com/overhide/ledgers.js) library calls the services from the browser.
 
