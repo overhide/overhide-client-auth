@@ -278,6 +278,7 @@ async function onHealthCheck() {
     throw new HealthCheckError('healtcheck failed', [dbError])
   }
   let status = {
+    host: os.hostname(),
     version: VERSION,
     database: 'OK'
   };
