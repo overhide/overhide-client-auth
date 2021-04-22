@@ -105,5 +105,13 @@ Then run the evolution:
 
 `npm run db-evolve`
 
+# Rate Limiting
 
+Access to these APIs is gated via config points:
 
+- `RATE_LIMIT_MAX_REQUESTS_PER_WINDOW`
+- `RATE_LIMIT_WINDOW_MS`
+
+This only applies to requests with a token other than the `INTERNAL_TOKEN` (if set).  `INTERNAL_TOKEN` requests are not rate-limited.
+
+All rate-limits are shared across nodes sharing the same `RATE_LIMIT_REDIS_NAMESPACE` if `RATE_LIMIT_REDIS_URI` is set to a redis instance.

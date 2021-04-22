@@ -2,7 +2,6 @@ const allow_cors = require('cors')();
 const http = require('http');
 const express = require('express');
 const {createTerminus: terminus, HealthCheckError} = require('@godaddy/terminus');
-const rateLimit = require("express-rate-limit");
 const ejs = require('ejs');
 const os = require('os');
 const path = require('path');
@@ -20,6 +19,8 @@ const PORT = process.env.PORT || process.env.npm_config_PORT || process.env.npm_
 const DEBUG = process.env.DEBUG || process.env.npm_config_DEBUG || process.env.npm_package_config_DEBUG;
 const RATE_LIMIT_WINDOW_MS = process.env.RATE_LIMIT_WINDOW_MS || process.env.npm_config_RATE_LIMIT_WINDOW_MS || process.env.npm_package_config_RATE_LIMIT_WINDOW_MS || 60000;
 const RATE_LIMIT_MAX_REQUESTS_PER_WINDOW = process.env.RATE_LIMIT_MAX_REQUESTS_PER_WINDOW || process.env.npm_config_RATE_LIMIT_MAX_REQUESTS_PER_WINDOW || process.env.npm_package_config_RATE_LIMIT_MAX_REQUESTS_PER_WINDOW || 10;
+const RATE_LIMIT_REDIS_URI = process.env.RATE_LIMIT_REDIS_URI || process.env.npm_config_RATE_LIMIT_REDIS_URI || process.env.npm_package_config_RATE_LIMIT_REDIS_URI || null;
+const RATE_LIMIT_REDIS_NAMESPACE = process.env.RATE_LIMIT_REDIS_NAMESPACE || process.env.npm_config_RATE_LIMIT_REDIS_NAMESPACE || process.env.npm_package_config_RATE_LIMIT_REDIS_NAMESPACE || "rate-limit";
 const POSTGRES_HOST = process.env.POSTGRES_HOST || process.env.npm_config_POSTGRES_HOST || process.env.npm_package_config_POSTGRES_HOST || 'localhost'
 const POSTGRES_PORT = process.env.POSTGRES_PORT || process.env.npm_config_POSTGRES_PORT || process.env.npm_package_config_POSTGRES_PORT || 5432
 const POSTGRES_DB = process.env.POSTGRES_DB || process.env.npm_config_POSTGRES_DB || process.env.npm_package_config_POSTGRES_DB;
@@ -47,6 +48,8 @@ const ctx_config = {
   debug: DEBUG,
   rateLimitWindowsMs: RATE_LIMIT_WINDOW_MS,
   rateLimitMax: RATE_LIMIT_MAX_REQUESTS_PER_WINDOW,
+  rateLimitRedis: RATE_LIMIT_REDIS_URI,
+  rateLimitRedisNamespace: RATE_LIMIT_REDIS_NAMESPACE,
   pghost: POSTGRES_HOST,
   pgport: POSTGRES_PORT,
   pgdatabase: POSTGRES_DB,
@@ -65,6 +68,7 @@ const crypto = require('./lib/crypto.js').init();
 const recaptcha = require('./lib/recaptcha.js').init(ctx_config);
 const database = require('./lib/database.js').init(ctx_config);
 const swagger = require('./lib/swagger.js').init(ctx_config);
+const throttle = require('./lib/throttle.js').check.bind(require('./lib/throttle.js').init(ctx_config));
 log("CONFIG:\n%O", ((cfg) => {
   cfg.pgpassword = cfg.pgpassword.replace(/.(?=.{2})/g,'*'); 
   cfg.salt = cfg.salt.replace(/.(?=.{2})/g,'*'); 
@@ -86,12 +90,6 @@ app.set('views', __dirname + `${path.sep}..${path.sep}static`);
 app.engine('html', ejs.renderFile);
 app.engine('template', ejs.renderFile);
 app.use(allow_cors);
-
-// rate limiters
-const throttle = rateLimit({
-  windowMs: RATE_LIMIT_WINDOW_MS,
-  max: RATE_LIMIT_MAX_REQUESTS_PER_WINDOW
-});
 
 // ROUTES
 
