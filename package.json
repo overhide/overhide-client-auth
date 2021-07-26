@@ -21,6 +21,7 @@
   "homepage": "https://github.com/JakubNer/overhide-client-auth.git",
   "dependencies": {
     "@godaddy/terminus": "4.1.0",
+    "applicationinsights": "2.1.4",
     "cors": "2.8.5",
     "debug": "4.1.0",
     "ejs": "2.6.1",

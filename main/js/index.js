@@ -28,6 +28,7 @@ const POSTGRES_USER = process.env.POSTGRES_USER || process.env.npm_config_POSTGR
 const POSTGRES_PASSWORD = process.env.POSTGRES_PASSWORD || process.env.npm_config_POSTGRES_PASSWORD || process.env.npm_package_config_POSTGRES_PASSWORD;
 const POSTGRES_SSL = process.env.POSTGRES_SSL || process.env.npm_config_POSTGRES_SSL || process.env.npm_package_config_POSTGRES_SSL;
 const SELECT_MAX_ROWS = process.env.SELECT_MAX_ROWS || process.env.npm_config_SELECT_MAX_ROWS || process.env.npm_package_config_SELECT_MAX_ROWS;
+const INSIGHTS_KEY = process.env.INSIGHTS_KEY || process.env.npm_config_INSIGHTS_KEY || process.env.npm_package_config_INSIGHTS_KEY
 const SALT = process.env.SALT || process.env.npm_config_SALT || process.env.npm_package_config_SALT;
 const TOKEN_VALIDITY_SECONDS = process.env.TOKEN_VALIDITY_SECONDS || process.env.npm_config_TOKEN_VALIDITY_SECONDS || process.env.npm_package_config_TOKEN_VALIDITY_SECONDS || 86400;
 const RECAPTCHA_URI = process.env.RECAPTCHA_URI || process.env.npm_config_RECAPTCHA_URI || process.env.npm_package_config_RECAPTCHA_URI;
@@ -57,6 +58,7 @@ const ctx_config = {
   pgpassword: POSTGRES_PASSWORD,
   pgssl: !!POSTGRES_SSL,
   select_max_rows: SELECT_MAX_ROWS,
+  insights_key: INSIGHTS_KEY,
   salt: SALT,
   recaptcha_uri: RECAPTCHA_URI,
   recaptcha_site_key: RECAPTCHA_SITE_KEY,
@@ -64,12 +66,14 @@ const ctx_config = {
 };
 const log = require('./lib/log.js').init(ctx_config).fn("app");
 const debug = require('./lib/log.js').init(ctx_config).debug_fn("app");
+const insights_key = require('./lib/insights.js').init(ctx_config);
 const crypto = require('./lib/crypto.js').init();
 const recaptcha = require('./lib/recaptcha.js').init(ctx_config);
 const database = require('./lib/database.js').init(ctx_config);
 const swagger = require('./lib/swagger.js').init(ctx_config);
 const throttle = require('./lib/throttle.js').check.bind(require('./lib/throttle.js').init(ctx_config));
 log("CONFIG:\n%O", ((cfg) => {
+  cfg.insights_key = cfg.insights_key ? cfg.insights_key.replace(/.(?=.{2})/g,'*') : null; 
   cfg.pgpassword = cfg.pgpassword.replace(/.(?=.{2})/g,'*'); 
   cfg.salt = cfg.salt.replace(/.(?=.{2})/g,'*'); 
   cfg.recaptcha_secret_key = cfg.recaptcha_secret_key.replace(/.(?=.{2})/g,'*'); 
