@@ -1,6 +1,6 @@
 <p align="center"><a href="https://github.com/overhide"><img src="./main/static/lib/logo.png" width="200px"/></a></p>
 
-<p align="center"><a href="https://overhide.io">overhide.io</a></p><p style="width: 500px; margin: auto">A free and open-sourced ecosystem of widgets, a front-end library, and back-end services &mdash; to make addition of "logins" and "in-app-purchases" (IAP) to your app as banal as possible.</p>
+<p align="center"><a href="https://overhide.io">overhide.io</a></p><p style="width: 500px; margin: auto">A free and fully open-sourced ecosystem of widgets, a front-end library, and back-end services &mdash; to make addition of "logins" and "in-app-purchases" (IAP) to your app as banal as possible.</p>
 
 <hr/>
 
@@ -9,6 +9,8 @@
 Client API key registration, token retrieval, and validation.
 
 Tokens retrieved with this service are used to authorize into other *overhide* services:  just provide as a `Bearer ${..}` token in the `Authorization` header.
+
+> For help, reach out on [r/overhide](https://www.reddit.com/r/overhide/).
 
 # Quick Start Docker
 
