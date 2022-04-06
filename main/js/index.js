@@ -120,7 +120,7 @@ app.get('/register', throttle, (req, res) => {
  *         required: true
  *         type: string
  *         description: |
- *            Private API key for requesting and refreshing tokens.  Register for an API key via https://token.overhide.io/register.
+ *            Per-app API key for requesting and refreshing tokens.  Register for an API key via https://token.overhide.io/register.
  *     produces:
  *       - text/plain
  *     responses:

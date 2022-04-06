@@ -72,9 +72,15 @@ class Swagger {
 
             Use of the token with other *overhide* services is usually abstracted on the front-end by providing it to [our widgets](https://github.com/overhide/overhide-widgets) which provide them to the [ledgers.js](https://github.com/overhide/ledgers.js) library.  The [ledgers.js](https://github.com/overhide/ledgers.js) library calls the services from the browser.
 
-            You will call this service from your secure back-end, providing your secret API key, and forwarding the retrieved token to your front-end.
+            You will call this service from your back-end, providing your API key, and forwarding the retrieved token to your front-end.
 
-            Do not put your API key in your easily introspectable front-end code.  If compromised and used nefariously, your API key will be black-listed.  You'll need to create a new one, and secure it properly.
+            Neither the API key nor the token retrieved with the key are authenticated secrets.  These are authorizing claims for use of the *overhide* systems.  They're used to allow the system to revoke session or -- if necessary -- application access to the system, in case of detected abuse.
+            
+            If the token stops working, subsequent sessions will continue to work.
+
+            If your API key stops working, re-think how you use one.  Recreate one at https://token.overhide.io/register.  
+
+            Reach out at https://www.reddit.com/r/overhide/.
             
           version: 1.0.0
           title: overhide-token API
